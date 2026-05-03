@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-section">
+    <div class="card-layout auth-card card-elevated">
+        <div class="card-header">
+            <div class="card-icon"><i class="fa-solid fa-right-to-bracket"></i></div>
+            <div>
+                <h2>Login</h2>
+                <p>Enter your credentials to access the dashboard.</p>
+            </div>
+        </div>
+        {% if error %}
+            <div style="color: red; margin-bottom: 10px;">
+                {{ error }}
+            </div>
+        {% endif %}
+        <form class="form-grid" method="post" action="{{ url_for('login') }}">
+            <div class="form-field">
+                <label>Username</label>
+                <div class="input-with-icon">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" name="username" placeholder="Enter username" required />
+                </div>
+            </div>
+            <div class="form-field">
+                <label>Password</label>
+                <div class="input-with-icon">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" name="password" placeholder="Enter password" required />
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">
+                <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                <span>Continue to Dashboard</span>
+            </button>
+        </form>
+    </div>
+</section>
+{% endblock %}
+
+            <!-- sit ----- ise      -->
+

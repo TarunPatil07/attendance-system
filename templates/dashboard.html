@@ -1,0 +1,340 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-section">
+    <div class="tabs-container card-elevated">
+        <div class="tabs-header">
+            <button class="tab-btn active" data-tab="registration" id="tab-registration">
+                <i class="fa-solid fa-user-plus"></i>
+                <span>Student Registration</span>
+            </button>
+            <button class="tab-btn" data-tab="attendance">
+                <i class="fa-solid fa-users-viewfinder"></i>
+                <span>Group Attendance</span>
+            </button>
+            <button class="tab-btn" data-tab="notifications">
+                <i class="fa-solid fa-envelope-open-text"></i>
+                <span>Notification Settings</span>
+            </button>
+        </div>
+
+        <div class="tabs-body">
+            <!-- TAB 1: Student Registration -->
+            <div class="tab-panel active" data-tab-panel="registration">
+                <div class="panel-title-row">
+                    <h2>Student Registration</h2>
+                    <span class="panel-subtitle">Upload images <strong>OR</strong> capture directly from webcam</span>
+                </div>
+                <div class="two-column-grid">
+                    <!-- Upload option -->
+                    <div class="card-layout">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fa-solid fa-upload"></i></div>
+                            <div>
+                                <h3>Option 1 &mdash; Upload Image(s)</h3>
+                                <p>Upload one or more clear face images to register a student.</p>
+                            </div>
+                        </div>
+                        <form id="form-register-upload" class="form-grid" enctype="multipart/form-data">
+                            <div class="form-field">
+                                <label>Student ID</label>
+                                <div class="input-with-icon">
+                                    <i class="fa-solid fa-id-badge"></i>
+                                    <input type="text" name="student_id" required placeholder="e.g., STU001" />
+                                </div>
+                            </div>
+                            <div class="form-field">
+                                <label>Student Name</label>
+                                <div class="input-with-icon">
+                                    <i class="fa-solid fa-user"></i>
+                                    <input type="text" name="name" required placeholder="e.g., Alex Johnson" />
+                                </div>
+                            </div>
+                            <div class="form-field">
+                                <label>Email (optional)</label>
+                                <div class="input-with-icon">
+                                    <i class="fa-solid fa-envelope"></i>
+                                    <input type="email" name="email" placeholder="e.g., alex@example.com" />
+                                </div>
+                            </div>
+                            <div class="form-field full-width">
+                                <label>Face Images (you can select multiple)</label>
+                                <div class="file-input">
+                                    <i class="fa-solid fa-images"></i>
+                                    <input type="file" name="images" id="register-images" multiple accept="image/*" required />
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-full">
+                                <i class="fa-solid fa-user-plus"></i>
+                                <span>Register Student (Upload)</span>
+                            </button>
+                            <div class="form-status" id="status-register-upload"></div>
+                        </form>
+                    </div>
+
+                    <!-- Webcam option -->
+                    <div class="card-layout">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fa-solid fa-camera"></i></div>
+                            <div>
+                                <h3>Option 2 &mdash; Capture from Webcam</h3>
+                                <p>Use your webcam to capture a live face for registration.</p>
+                            </div>
+                        </div>
+                        <form id="form-register-webcam" class="form-grid">
+                            <div class="form-field">
+                                <label>Student ID</label>
+                                <div class="input-with-icon">
+                                    <i class="fa-solid fa-id-badge"></i>
+                                    <input type="text" name="student_id" required placeholder="e.g., STU002" />
+                                </div>
+                            </div>
+                            <div class="form-field">
+                                <label>Student Name</label>
+                                <div class="input-with-icon">
+                                    <i class="fa-solid fa-user"></i>
+                                    <input type="text" name="name" required placeholder="e.g., Priya Singh" />
+                                </div>
+                            </div>
+                            <div class="form-field">
+                                <label>Email (optional)</label>
+                                <div class="input-with-icon">
+                                    <i class="fa-solid fa-envelope"></i>
+                                    <input type="email" name="email" placeholder="e.g., priya@example.com" />
+                                </div>
+                            </div>
+                            <div class="webcam-wrapper">
+                                <video id="webcam-register" autoplay playsinline></video>
+                                <canvas id="canvas-register" class="hidden"></canvas>
+                            </div>
+                            <div class="button-row">
+                                <button type="button" class="btn btn-ghost" id="btn-start-webcam-register">
+                                    <i class="fa-solid fa-video"></i>
+                                    <span>Start Camera</span>
+                                </button>
+                                <button type="button" class="btn btn-primary" id="btn-capture-register">
+                                    <i class="fa-solid fa-camera-retro"></i>
+                                    <span>Capture &amp; Register</span>
+                                </button>
+                            </div>
+                            <div class="form-status" id="status-register-webcam"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: Group Attendance -->
+            <div class="tab-panel" data-tab-panel="attendance">
+                <div class="panel-title-row">
+                    <h2>Group Attendance</h2>
+                    <span class="panel-subtitle">Upload a group photo or capture using the webcam. Then click <strong>TAKE ATTENDANCE</strong>.</span>
+                </div>
+                <div class="two-column-grid">
+                    <!-- Upload group photo -->
+                    <div class="card-layout">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fa-solid fa-users"></i></div>
+                            <div>
+                                <h3>Upload Group Photo</h3>
+                                <p>Upload a single image that contains multiple faces.</p>
+                            </div>
+                        </div>
+                        <form id="form-attendance-upload" class="form-grid" enctype="multipart/form-data">
+                            <div class="form-field full-width">
+                                <label>Group Photo</label>
+                                <div class="file-input">
+                                    <i class="fa-solid fa-image"></i>
+                                    <input type="file" name="group_image" id="attendance-group-image" accept="image/*" />
+                                </div>
+                            </div>
+                            <div class="form-status" id="status-attendance-upload"></div>
+                        </form>
+                    </div>
+
+                    <!-- Webcam group photo -->
+                    <div class="card-layout">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fa-solid fa-video"></i></div>
+                            <div>
+                                <h3>Capture Group Photo via Webcam</h3>
+                                <p>Use the live webcam feed to capture the whole group.</p>
+                            </div>
+                        </div>
+                        <form id="form-attendance-webcam" class="form-grid">
+                            <div class="webcam-wrapper">
+                                <video id="webcam-attendance" autoplay playsinline></video>
+                                <canvas id="canvas-attendance" class="hidden"></canvas>
+                            </div>
+                            <div class="button-row">
+                                <button type="button" class="btn btn-ghost" id="btn-start-webcam-attendance">
+                                    <i class="fa-solid fa-video"></i>
+                                    <span>Start Camera</span>
+                                </button>
+                                <button type="button" class="btn btn-secondary" id="btn-capture-attendance">
+                                    <i class="fa-solid fa-camera"></i>
+                                    <span>Capture Frame</span>
+                                </button>
+                            </div>
+                            <input type="hidden" id="attendance-webcam-data" />
+                            <div class="form-status" id="status-attendance-webcam"></div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="take-attendance-row">
+                    <button type="button" class="btn btn-primary btn-large" id="btn-take-attendance">
+                        <i class="fa-solid fa-calendar-check"></i>
+                        <span>TAKE ATTENDANCE</span>
+                    </button>
+                    <p class="take-attendance-hint">The system will detect all faces, recognize students, store records in MySQL, and display the attendance summary below.</p>
+                </div>
+
+                <div id="attendance-summary" class="attendance-summary hidden">
+                    <h3><i class="fa-solid fa-clipboard-list"></i> Attendance Summary</h3>
+                    <div class="summary-grid">
+                        <div class="summary-card">
+                            <div class="summary-header present">
+                                <i class="fa-solid fa-user-check"></i>
+                                <span>Present List</span>
+                            </div>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th><i class="fa-solid fa-user"></i> Name</th>
+                                        <th><i class="fa-solid fa-id-badge"></i> Student ID</th>
+                                        <th><i class="fa-solid fa-clock"></i> Timestamp</th>
+                                        <th><i class="fa-solid fa-image"></i> Thumbnail</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-present-body">
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-header absent">
+                                <i class="fa-solid fa-user-xmark"></i>
+                                <span>Absent List</span>
+                            </div>
+                            <table class="data-table data-table-absent">
+                                <thead>
+                                    <tr>
+                                        <th><i class="fa-solid fa-user"></i> Name</th>
+                                        <th><i class="fa-solid fa-id-badge"></i> Student ID</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-absent-body">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- Download Excel Button -->
+                    <div class="attendance-summary-actions">
+                        <button type="button" class="btn btn-primary" id="btn-download-excel">
+                            <i class="fa-solid fa-file-excel"></i>
+                            <span>Download Excel</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: Notification Settings -->
+            <div class="tab-panel" data-tab-panel="notifications">
+                <div class="panel-title-row">
+                    <h2>Notification Settings</h2>
+                    <span class="panel-subtitle">Configure SMTP and send absentee alert emails in one click.</span>
+                </div>
+                <div class="two-column-grid">
+                    <div class="card-layout">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fa-solid fa-server"></i></div>
+                            <div>
+                                <h3>SMTP Configuration</h3>
+                                <p>Save your email server details. Passwords are stored only in your database.</p>
+                            </div>
+                        </div>
+                        <form id="form-notify-config" class="form-grid">
+                            <div class="form-field">
+                                <label>SMTP Server</label>
+                                <div class="input-with-icon">
+                                    <i class="fa-solid fa-at"></i>
+                                    <input type="text" name="smtp_server" placeholder="smtp.gmail.com" required />
+                                </div>
+                            </div>
+                            <div class="form-field">
+                                <label>SMTP Port</label>
+                                <div class="input-with-icon">
+                                    <i class="fa-solid fa-hashtag"></i>
+                                    <input type="number" name="smtp_port" placeholder="587" />
+                                </div>
+                            </div>
+                            <div class="form-field">
+                                <label>Username</label>
+                                <div class="input-with-icon">
+                                    <i class="fa-solid fa-user-tie"></i>
+                                    <input type="text" name="smtp_username" placeholder="your-email@example.com" />
+                                </div>
+                            </div>
+                            <div class="form-field">
+                                <label>Password</label>
+                                <div class="input-with-icon">
+                                    <i class="fa-solid fa-key"></i>
+                                    <input type="password" name="smtp_password" placeholder="App password or SMTP password" />
+                                </div>
+                            </div>
+                            <div class="form-field">
+                                <label>From Email</label>
+                                <div class="input-with-icon">
+                                    <i class="fa-solid fa-paper-plane"></i>
+                                    <input type="email" name="from_email" placeholder="noreply@example.com" />
+                                </div>
+                            </div>
+                            <div class="form-field toggle-field">
+                                <label>Use TLS</label>
+                                <label class="switch">
+                                    <input type="checkbox" name="use_tls" checked />
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="form-field toggle-field">
+                                <label>Enable Auto Email Notifications</label>
+                                <label class="switch">
+                                    <input type="checkbox" name="auto_email_enabled" />
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-full">
+                                <i class="fa-solid fa-floppy-disk"></i>
+                                <span>Save Settings</span>
+                            </button>
+                            <div class="form-status" id="status-notify-config"></div>
+                        </form>
+                    </div>
+
+                    <div class="card-layout">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fa-solid fa-bell"></i></div>
+                            <div>
+                                <h3>Send Absentee Alerts</h3>
+                                <p>Trigger simple email alerts for all absentees on a specific date.</p>
+                            </div>
+                        </div>
+                        <form id="form-notify-send" class="form-grid">
+                            <div class="form-field">
+                                <label>Date</label>
+                                <div class="input-with-icon">
+                                    <i class="fa-solid fa-calendar"></i>
+                                    <input type="date" name="date" />
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-secondary btn-full">
+                                <i class="fa-solid fa-paper-plane"></i>
+                                <span>Send Absentee Emails</span>
+                            </button>
+                            <div class="form-status" id="status-notify-send"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

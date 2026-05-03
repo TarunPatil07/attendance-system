@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero-section">
+    <div class="hero-content card-elevated">
+        <h2 class="hero-title">Facial Recognition&ndash;Based Smart Attendance System</h2>
+        <p class="hero-subtitle">
+            Automate classroom attendance using advanced RetinaFace detection and ArcFace recognition.
+            Fast, accurate, and completely touchless.
+        </p>
+        <div class="hero-highlights">
+            <div class="highlight-pill"><i class="fa-solid fa-bolt"></i><span>Real-time recognition</span></div>
+            <div class="highlight-pill"><i class="fa-solid fa-shield-halved"></i><span>Reliable attendance logs</span></div>
+            <div class="highlight-pill"><i class="fa-solid fa-wifi"></i><span>Webcam &amp; image uploads</span></div>
+        </div>
+        <div class="hero-actions">
+            <a href="{{ url_for('login') }}" class="btn btn-primary"><i class="fa-solid fa-right-to-bracket"></i><span>Login</span></a>
+        </div>
+    </div>
+    <div class="hero-visual card-elevated">
+        <div class="hero-face-grid">
+            <div class="face-card"><i class="fa-solid fa-user-check"></i><span>Auto Attendance</span></div>
+            <div class="face-card"><i class="fa-solid fa-users-viewfinder"></i><span>Group Scan</span></div>
+            <div class="face-card"><i class="fa-solid fa-envelope-circle-check"></i><span>Absentee Alerts</span></div>
+            <div class="face-card"><i class="fa-solid fa-chart-line"></i><span>Instant Summary</span></div>
+        </div>
+    </div>
+</section>
+{% endblock %}

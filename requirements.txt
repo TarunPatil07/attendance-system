@@ -1,0 +1,7 @@
+Flask
+Flask-SQLAlchemy
+PyMySQL
+insightface
+onnxruntime
+opencv-python
+numpy
