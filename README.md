@@ -194,6 +194,16 @@ FACE-REC/
 
 
 
+📸 Screenshots
+
+🏠 Home Page
+🎯 Registration
+📊 Dashboard
+📥 Notification
+
+
+
+
 🎯 Applications
 
 
