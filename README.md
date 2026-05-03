@@ -1,4 +1,4 @@
-**🎓 Facial Recognition-Based Smart Attendance System**
+**🎓 Facial Recognition-Based Smart Attendance System with Analytics and Notification**
 
 
 
